@@ -3,6 +3,7 @@ __pycache__
 *.pyo
 .git
 .env
-venv
 .venv
-pytest_cache
+venv
+.pytest_cache
+.DS_Store
