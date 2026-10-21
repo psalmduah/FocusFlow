@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+
+metadata:
+  name: focusflow-api
+  namespace: focusflow-dev
+
+spec:
+  selector:
+    app: focusflow-api
+
+  ports:
+    - port: 8000
+      targetPort: 8000
+
+  type: ClusterIP

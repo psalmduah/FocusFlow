@@ -8,7 +8,7 @@ from .routes import router
 
 app = FastAPI(
     title="FocusFlow API",
-    version="1.0.0"
+    version="1.0.3"
 )
 
 
@@ -59,6 +59,13 @@ def readiness():
     finally:
         db.close()
 
+@app.get("/version")
+def version():
+
+    return {
+        "application": "FocusFlow",
+        "version": app.version
+    }
 
 Instrumentator().instrument(app).expose(
     app,
