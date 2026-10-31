@@ -1,0 +1,13 @@
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+
+metadata:
+  name: focusflow-api-pdb
+  namespace: focusflow-dev
+
+spec:
+  minAvailable: 2
+
+  selector:
+    matchLabels:
+      app: focusflow-api

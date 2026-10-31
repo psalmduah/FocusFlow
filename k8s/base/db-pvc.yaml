@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+
+metadata:
+  name: focusflow-db-pvc
+  namespace: focusflow-dev
+
+spec:
+  accessModes:
+    - ReadWriteOnce
+
+  resources:
+    requests:
+      storage: 2Gi
