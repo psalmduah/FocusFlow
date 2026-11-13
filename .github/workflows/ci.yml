@@ -128,11 +128,11 @@ jobs:
 
           sleep 5
 
-          curl --fail http://localhost:18081/health
+          curl --fail http://localhost:18081/this-endpoint-does-not-exist
           curl --fail http://localhost:18081/version
           curl --fail http://localhost:18081/ready 
 
-          
+
       - name: Roll back failed deployment
         if: failure()
         run: |
