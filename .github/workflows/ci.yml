@@ -72,3 +72,45 @@ jobs:
         run: |
           docker push \
             ghcr.io/${{ github.repository_owner }}/focusflow-api:${{ github.sha }}
+ 
+  deploy-dev:
+    name: Deploy to DEV
+    runs-on: self-hosted
+
+    needs:
+      - docker-build
+
+    if: github.event_name == 'push' && github.ref == 'refs/heads/feature/app1-gpt'
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Verify Kubernetes connection
+        run: |
+          kubectl config current-context
+          kubectl get nodes
+
+      - name: Deploy CI image to DEV
+        run: |
+          IMAGE="ghcr.io/${{ github.repository_owner }}/focusflow-api:${{ github.sha }}"
+
+          echo "Deploying: $IMAGE"
+
+          kubectl set image \
+            deployment/focusflow-api \
+            api="$IMAGE" \
+            -n focusflow-dev
+
+      - name: Wait for rollout
+        run: |
+          kubectl rollout status \
+            deployment/focusflow-api \
+            -n focusflow-dev \
+            --timeout=120s
+
+      - name: Verify deployed image
+        run: |
+          kubectl get deployment focusflow-api \
+            -n focusflow-dev \
+            -o jsonpath='{.spec.template.spec.containers[0].image}{"\n"}'
