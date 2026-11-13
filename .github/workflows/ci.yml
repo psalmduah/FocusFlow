@@ -130,4 +130,21 @@ jobs:
 
           curl --fail http://localhost:18081/health
           curl --fail http://localhost:18081/version
-          curl --fail http://localhost:18081/ready           
+          curl --fail http://localhost:18081/ready 
+
+          
+      - name: Roll back failed deployment
+        if: failure()
+        run: |
+          echo "Deployment validation failed. Rolling back..."
+
+          kubectl rollout undo \
+            deployment/focusflow-api \
+            -n focusflow-dev
+
+          kubectl rollout status \
+            deployment/focusflow-api \
+            -n focusflow-dev \
+            --timeout=120s
+
+          echo "Rollback completed."                
