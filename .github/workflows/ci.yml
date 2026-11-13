@@ -114,3 +114,20 @@ jobs:
           kubectl get deployment focusflow-api \
             -n focusflow-dev \
             -o jsonpath='{.spec.template.spec.containers[0].image}{"\n"}'
+
+      - name: Smoke test DEV
+        run: |
+          kubectl port-forward \
+            -n focusflow-dev \
+            service/focusflow-api \
+            18081:8000 > /tmp/focusflow-portforward.log 2>&1 &
+
+          PF_PID=$!
+
+          trap 'kill $PF_PID 2>/dev/null || true' EXIT
+
+          sleep 5
+
+          curl --fail http://localhost:18081/health
+          curl --fail http://localhost:18081/version
+          curl --fail http://localhost:18081/ready           
