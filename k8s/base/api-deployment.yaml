@@ -25,14 +25,17 @@ spec:
         app: focusflow-api
 
     spec:
-
+      
+      imagePullSecrets:
+          - name: ghcr-secret
+          
       containers:
 
         - name: api
+          
+          image: ghcr.io/psalmduah/focusflow-api:175e121dbf5cc06fc0fc55f592870c9977609d78
 
-          image: focusflow-api:5ec359b
-
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
 
           ports:
             - containerPort: 8000
