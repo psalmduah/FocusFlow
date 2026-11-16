@@ -1,5 +1,14 @@
 FROM python:3.12-slim-trixie
 
+ARG GIT_SHA=unknown
+ARG REPOSITORY_URL=unknown
+
+LABEL org.opencontainers.image.title="FocusFlow API" \
+      org.opencontainers.image.description="FocusFlow FastAPI backend" \
+      org.opencontainers.image.source="${REPOSITORY_URL}" \
+      org.opencontainers.image.revision="${GIT_SHA}" \
+      org.opencontainers.image.version="${GIT_SHA}"
+
 RUN apt-get update \
     && apt-get install -y --no-install-recommends --only-upgrade zlib1g \
     && rm -rf /var/lib/apt/lists/*

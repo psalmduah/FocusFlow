@@ -66,6 +66,8 @@ jobs:
         run: |
           docker build \
             --pull \
+            --build-arg GIT_SHA=${{ github.sha }} \
+            --build-arg REPOSITORY_URL=${{ github.server_url }}/${{ github.repository }} \
             -t ghcr.io/${{ github.repository_owner }}/focusflow-api:${{ github.sha }} \
             -t ghcr.io/${{ github.repository_owner }}/focusflow-api:dev \
             ./api
