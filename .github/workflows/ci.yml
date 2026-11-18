@@ -19,7 +19,7 @@ jobs:
 
   test:
     name: Test API
-    runs-on: ubuntu-24.04
+    runs-on: ubuntu-24.04 #updated from ubuntu-latest to ubuntu-24.04 for better compatibility with Python 3.12
     
     permissions:
       contents: read
