@@ -83,6 +83,20 @@ jobs:
           vuln-type: os,library
           severity: CRITICAL,HIGH
 
+      - name: Generate SBOM
+        run: |
+          trivy image \
+            --format cyclonedx \
+            --output focusflow-sbom.cdx.json \
+            ghcr.io/${{ github.repository_owner }}/focusflow-api:${{ github.sha }}
+            
+      - name: Upload SBOM artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: focusflow-sbom-${{ github.sha }}
+          path: focusflow-sbom.cdx.json
+          retention-days: 30
+
       - name: Push Docker image
         run: |
           docker push \
