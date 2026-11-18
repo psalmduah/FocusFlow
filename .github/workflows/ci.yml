@@ -20,7 +20,8 @@ jobs:
   test:
     name: Test API
     runs-on: ubuntu-24.04 #updated from ubuntu-latest to ubuntu-24.04 for better compatibility with Python 3.12
-    
+    timeout-minutes: 10
+
     permissions:
       contents: read
     
@@ -51,7 +52,8 @@ jobs:
     name: Build and Push Docker Image
 
     runs-on: ubuntu-24.04
-   
+    timeout-minutes: 15
+
     permissions:
       contents: read
       packages: write
@@ -137,6 +139,7 @@ jobs:
   deploy-dev:
     name: Deploy to DEV
     runs-on: self-hosted
+    timeout-minutes: 10
     
     permissions:
       contents: read
