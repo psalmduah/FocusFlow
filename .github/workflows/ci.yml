@@ -9,10 +9,10 @@ on:
   pull_request:
     branches:
       - main
-      
-  concurrency:
-    group: focusflow-dev-${{ github.ref }}
-    cancel-in-progress: true
+
+concurrency:
+  group: focusflow-dev-${{ github.ref }}
+  cancel-in-progress: true
 
   
 jobs:
