@@ -48,7 +48,7 @@ jobs:
           pip freeze > resolved-requirements.txt    
 
       - name: Upload resolved dependency list
-        uses: actions/upload-artifact@5301c5696989529d26ecd4c1824a14a3a873a081 # v7.0.0
+        uses: actions/upload-artifact@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.0
         with:
           name: resolved-requirements-${{ github.sha }}
           path: api/resolved-requirements.txt
