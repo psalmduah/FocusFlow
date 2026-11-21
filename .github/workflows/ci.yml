@@ -43,10 +43,26 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Record resolved Python dependencies
+        run: |
+          pip freeze > resolved-requirements.txt    
+
+      - name: Upload resolved dependency list
+        uses: actions/upload-artifact@5301c5696989529d26ecd4c1824a14a3a873a081 # v7.0.0
+        with:
+          name: resolved-requirements-${{ github.sha }}
+          path: api/resolved-requirements.txt
+          retention-days: 30
+
+      - name: Install pip-audit
+        run: pip install pip-audit
+
+      - name: Audit Python dependencies
+        run: pip-audit -r requirements.txt
+
       - name: Run tests
         run: |
-          python -m pytest -v
-
+          python -m pytest -v          
 
   docker-build:
     name: Build and Push Docker Image
